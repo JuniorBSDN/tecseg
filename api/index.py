@@ -25,7 +25,7 @@ if not firebase_admin._apps:
         print("❌ Erro ao inicializar Firebase:", e)
 
 db = firestore.client()
-colecao = 'dbdenuncia'
+colecao = 'db-tecseg'
 
 def enviar_email_denuncia(dados_denuncia):
     sender_email = os.environ.get("EMAIL_USER")
