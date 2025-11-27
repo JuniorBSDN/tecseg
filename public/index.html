@@ -1,0 +1,565 @@
+<!DOCTYPE html>
+<html lang="pt-BR" style="scroll-behavior: smooth;">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TECSEG | Internet de Fibra Óptica e Segurança Eletrônica</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'tecseg-primary': '#ffc107', // Amarelo/Ouro
+                        'tecseg-dark': '#1a1a1a', // Preto/Escuro
+                        'tecseg-light': '#f5f5f5', // Quase Branco
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    // Animações para o Teste de Conexão e Alerta de Preço
+                    keyframes: {
+                        pulseYellow: {
+                            '0%, 100%': { opacity: 1, transform: 'scale(1)' },
+                            '50%': { opacity: 0.5, transform: 'scale(1.05)' },
+                        },
+                        fadeInDown: {
+                            '0%': { opacity: 0, transform: 'translateY(-20px)' },
+                            '100%': { opacity: 1, transform: 'translateY(0)' },
+                        }
+                    },
+                    animation: {
+                        pulseYellow: 'pulseYellow 2s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        fadeInDown: 'fadeInDown 1s ease-out forwards',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilo para a fonte Inter */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
+
+        /* Transição global para todos os elementos (efeito moderno) */
+        * { transition: all 0.3s ease-in-out; }
+
+        /* Estilo para a animação do Teste de Conexão */
+        #speed-dial {
+            transform: rotate(-135deg); /* Posição inicial (0) */
+            transition: transform 1.5s ease-out;
+        }
+
+        /* Destaque para a falta de preço (Ainda pendente do usuário) */
+        .price-alert {
+            animation: pulse 1s infinite;
+        }
+
+        /* Efeito de rolagem para elementos */
+        .scroll-fade {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94); /* Curva de animação moderna */
+        }
+        .scroll-fade.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Header moderno ao rolar */
+        #header.scrolled {
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding-top: 8px !important;
+            padding-bottom: 8px !important;
+            transition: all 0.4s ease-in-out;
+        }
+
+        /* Estilo para o slider (melhora a transição) */
+        .slide {
+            transition: opacity 1s ease-in-out;
+        }
+
+    </style>
+</head>
+
+<body class="font-sans text-tecseg-dark bg-white">
+
+    <header id="header" class="fixed w-full z-50 bg-white shadow-md transition-all duration-300">
+        <nav class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#hero" class="flex items-center space-x-1 sm:space-x-2">
+                <img src="https://i.imgur.com/4aPFJyI.jpeg" alt="Logo 1" class="h-6 sm:h-8 rounded-full border border-gray-100">
+                <img src="https://mobilitex.com.br/wp-content/uploads/2018/10/cabo-2.png" alt="Logo 2" class="h-6 sm:h-8 rounded-full border border-gray-100">
+                <img src="https://images.tcdn.com.br/img/img_prod/392470/180_444_1_20170505144607.jpg" alt="Logo 3" class="h-6 sm:h-8 rounded-full border border-gray-100">
+                <img src="https://itsection.com.br/wp-content/uploads/2023/04/Intelbras-apresenta-duas-novas-solucoes-ao-mercado-de-CFTV-IP.png" alt="Logo 4" class="h-6 sm:h-8 rounded-full border border-gray-100">
+                <img src="https://friopecas.vtexassets.com/arquivos/ids/231090-800-450?v=638428208067330000&width=800&height=450&aspect=true" alt="Logo 5" class="h-6 sm:h-8 rounded-full border border-gray-100">
+            </a>
+
+            <div class="hidden md:flex space-x-4 text-sm font-medium items-center">
+                <a href="#quem-somos" class="py-2 px-3 hover:text-tecseg-primary transition duration-300 rounded-lg">Inicio</a>
+                <a href="#planos" class="py-2 px-3 hover:text-tecseg-primary transition duration-300 rounded-lg">Internet</a>
+                <a href="#seguranca" class="py-2 px-3 hover:text-tecseg-primary transition duration-300 rounded-lg">Segurança Eletrônica</a>
+                <a href="#teste" class="py-2 px-3 hover:text-tecseg-primary transition duration-300 rounded-lg">Teste de Conexão</a>
+                <a href="#contato" class="py-2 px-3 hover:text-tecseg-primary transition duration-300 rounded-lg">Contato</a>
+
+                <a href="suporte.html" target="_blank" class="bg-blue-600 text-white py-2.5 px-5 rounded-full shadow-lg hover:bg-blue-700 transition duration-300 font-bold flex items-center ml-4 group">
+                    <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C7.26 2 3.32 5.94 3.32 10.72c0 2.21.78 4.31 2.22 5.92L4 20l4.3-1.12c1.55.88 3.3 1.34 5.06 1.34C16.82 20.22 20.76 16.28 20.76 11.5c0-4.78-3.94-8.72-8.72-8.72zm.04 15.34c-1.63 0-3.15-.43-4.48-1.2l-.32-.19-3.32.87.89-3.26-.2-.33c-.77-1.28-1.17-2.73-1.17-4.27 0-3.9 3.17-7.07 7.07-7.07 3.9 0 7.07 3.17 7.07 7.07 0 3.9-3.17 7.07-7.07 7.07zM15.42 12.58l-1.63-.8c-.1-.05-.22-.05-.32-.01-.1.04-.15.13-.21.24-.07.1-.14.23-.2.34s-.12.22-.18.33c-.07.1-.14.22-.22.3-.08.08-.18.14-.28.18-.1.04-.2.05-.31.02-.1-.04-.2-.1-.28-.2-.07-.08-.15-.17-.22-.27-.06-.11-.13-.2-.2-.29-.07-.09-.15-.17-.24-.22-.08-.05-.18-.08-.28-.08-.1 0-.17.02-.27.05-.1.04-.2.1-.28.18l-.22.24c-.06.09-.13.18-.19.29-.06.11-.12.23-.17.34-.05.11-.08.23-.08.36 0 .1.03.22.08.35.05.12.13.25.2.37.07.12.16.25.26.37.1.11.23.23.36.33.14.1.28.2.43.28.15.08.3.14.47.18.17.04.34.05.5.01.18-.04.35-.11.5-.2.15-.09.28-.2.4-.33.1-.1.2-.2.3-.31.06-.07.1-.15.15-.22.05-.08.08-.15.12-.22.04-.07.07-.15.09-.22.02-.07.03-.15.03-.23 0-.08-.01-.15-.03-.23-.02-.07-.05-.15-.09-.22z"/></svg>
+                    Suporte Remoto
+                </a>
+
+                <a href="https://wa.me/5591980824195" target="_blank" class="bg-green-500 text-white py-2.5 px-5 rounded-full shadow-lg hover:bg-green-600 transition duration-300 font-bold flex items-center group">
+                    <svg class="w-4 h-4 mr-2 group-hover:scale-110 transition" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12.04 2C7.26 2 3.32 5.94 3.32 10.72c0 2.21.78 4.31 2.22 5.92L4 20l4.3-1.12c1.55.88 3.3 1.34 5.06 1.34C16.82 20.22 20.76 16.28 20.76 11.5c0-4.78-3.94-8.72-8.72-8.72zm.04 15.34c-1.63 0-3.15-.43-4.48-1.2l-.32-.19-3.32.87.89-3.26-.2-.33c-.77-1.28-1.17-2.73-1.17-4.27 0-3.9 3.17-7.07 7.07-7.07 3.9 0 7.07 3.17 7.07 7.07 0 3.9-3.17 7.07-7.07 7.07zM15.42 12.58l-1.63-.8c-.1-.05-.22-.05-.32-.01-.1.04-.15.13-.21.24-.07.1-.14.23-.2.34s-.12.22-.18.33c-.07.1-.14.22-.22.3-.08.08-.18.14-.28.18-.1.04-.2.05-.31.02-.1-.04-.2-.1-.28-.2-.07-.08-.15-.17-.22-.27-.06-.11-.13-.2-.2-.29-.07-.09-.15-.17-.24-.22-.08-.05-.18-.08-.28-.08-.1 0-.17.02-.27.05-.1.04-.2.1-.28.18l-.22.24c-.06.09-.13.18-.19.29-.06.11-.12.23-.17.34-.05.11-.08.23-.08.36 0 .1.03.22.08.35.05.12.13.25.2.37.07.12.16.25.26.37.1.11.23.23.36.33.14.1.28.2.43.28.15.08.3.14.47.18.17.04.34.05.5.01.18-.04.35-.11.5-.2.15-.09.28-.2.4-.33.1-.1.2-.2.3-.31.06-.07.1-.15.15-.22.05-.08.08-.15.12-.22.04-.07.07-.15.09-.22.02-.07.03-.15.03-.23 0-.08-.01-.15-.03-.23-.02-.07-.05-.15-.09-.22z"/></svg>
+                    WhatsApp
+                </a>
+            </div>
+
+            <button id="menu-button" class="md:hidden text-tecseg-dark focus:outline-none p-2 rounded-lg hover:bg-tecseg-light transition">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+            </button>
+        </nav>
+
+        <div id="mobile-menu" class="hidden md:hidden bg-tecseg-dark/95 backdrop-blur-sm absolute w-full shadow-xl transition-all duration-300">
+            <a href="#quem-somos" class="block py-3 px-6 text-white hover:bg-tecseg-primary hover:text-tecseg-dark transition">Inicio</a>
+            <a href="#planos" class="block py-3 px-6 text-white hover:bg-tecseg-primary hover:text-tecseg-dark transition">Internet</a>
+            <a href="#seguranca" class="block py-3 px-6 text-white hover:bg-tecseg-primary hover:text-tecseg-dark transition">Segurança Eletrônica</a>
+            <a href="#teste" class="block py-3 px-6 text-white hover:bg-tecseg-primary hover:text-tecseg-dark transition">Teste de Conexão</a>
+            <a href="#contato" class="block py-3 px-6 text-white hover:bg-tecseg-primary hover:text-tecseg-dark transition">Contato</a>
+
+            <a href="suporte.html" target="_blank" class="block py-3 px-6 bg-blue-700 text-white font-bold hover:bg-blue-800 transition">Suporte Remoto</a>
+            <a href="https://wa.me/5591980824195" target="_blank" class="block py-3 px-6 bg-green-600 text-white font-bold hover:bg-green-700 transition">WhatsApp</a>
+
+        </div>
+    </header>
+
+    <main class="pt-20">
+
+       <section id="quem-somos" class="relative bg-tecseg-dark h-[65vh] md:h-[80vh] flex items-center justify-center overflow-hidden">
+            <div id="carousel" class="w-full h-full absolute inset-0">
+
+                <div class="slide absolute inset-0 opacity-100">
+                    <img src="https://backend.intelbras.com/sites/default/files/2021-12/banner.jpg" alt="Fibra Óptica Pura" class="w-full h-full object-cover opacity-30">
+                    <div class="absolute inset-0 flex flex-col justify-center items-start text-left p-8 md:px-20 lg:px-40 bg-black/40">
+                        <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4 animate-fadeInDown">Conectividade e Redes</h1>
+                        <p class="text-base sm:text-xl text-tecseg-light max-w-xl scroll-fade delay-300">* Roteadores de alto desempenho e segurança.<br>* Switches de alta peformace<br>* Cabos de internet.<br>* Fontes</p>
+                        <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#seguranca" class="border-2 border-white text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-white hover:text-tecseg-dark transform hover:scale-105 transition duration-300 scroll-fade delay-500">Solicictar Orçamento</a>
+                            <a href="atendimento.html" class="border-2 border-tecseg-primary text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-tecseg-primary hover:text-tecseg-dark transform hover:scale-105 transition duration-300 scroll-fade delay-600">Solicictar Atendimento</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide absolute inset-0 opacity-0">
+                    <img src="https://guiadecftv.com/wp-content/uploads/2025/08/voltagem-cerca-eletrica.png.webp" alt="Tecnologia e Segurança" class="w-full h-full object-cover opacity-30">
+                    <div class="absolute inset-0 flex flex-col justify-center items-start text-left p-8 md:px-20 lg:px-40 bg-black/40">
+                        <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4 animate-fadeInDown">Segurança e Vigilância</h2>
+                        <p class="text-base sm:text-xl text-tecseg-light max-w-xl scroll-fade delay-300">* Câmeras de Segurança (CFTV) <br>* Sensores e Alarmes <br>* Componentes para Cerca Elétrica</p>
+                        <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#seguranca" class="border-2 border-white text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-white hover:text-tecseg-dark transform hover:scale-105 transition duration-300 scroll-fade delay-500">Solicictar Orçamento</a>
+                            <a href="atendimento.html" class="border-2 border-tecseg-primary text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-tecseg-primary hover:text-tecseg-dark transform hover:scale-105 transition duration-300 scroll-fade delay-600">Solicictar Atendimento</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide absolute inset-0 opacity-0">
+                    <img src="https://wallpapers.com/images/featured/eletricidade-gyv8rfi2lh5wzsoo.jpg" alt="Atendimento Local" class="w-full h-full object-cover opacity-30">
+                    <div class="absolute inset-0 flex flex-col justify-center items-start text-left p-8 md:px-20 lg:px-40 bg-black/40">
+                        <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4 animate-fadeInDown">Acessórios e Elétrica</h2>
+                        <p class="text-base sm:text-xl text-tecseg-light max-w-xl scroll-fade delay-300">* Tomadas e Adaptadores<br>* Pilhas e Baterias<br>* Peças para Automação</p>
+                        <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#seguranca" class="border-2 border-white text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-white hover:text-tecseg-dark transform hover:scale-105 transition duration-300 scroll-fade delay-500">Solicictar Orçamento</a>
+                            <a href="atendimento.html" class="border-2 border-tecseg-primary text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-tecseg-primary hover:text-tecseg-dark transform hover:scale-105 transition duration-300 scroll-fade delay-600">Solicictar Atendimento</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide absolute inset-0 opacity-0">
+                    <img src="https://wallpapers.com/images/hd/thorough-communication-1kjuf3058jdxsxx8.jpg" alt="Comunicação e Internet" class="w-full h-full object-cover opacity-30">
+                    <div class="absolute inset-0 flex flex-col justify-center items-start text-left p-8 md:px-20 lg:px-40 bg-black/40">
+                        <h1 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4 animate-fadeInDown">Conexão que Transforma.</h1>
+                        <p class="text-base sm:text-xl text-tecseg-light max-w-xl scroll-fade delay-300">Somos a <strong>TECSEG</strong>, levando internet de ultravelocidade para sua casa e empresa com a estabilidade da Fibra Óptica.</p>
+                        <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#planos" class="bg-tecseg-primary text-tecseg-dark font-bold py-3 px-8 rounded-full shadow-xl hover:bg-yellow-600 transform hover:scale-105 transition duration-300 scroll-fade delay-500">Ver Planos</a>
+                            <a href="atendimento.html" class="border-2 border-tecseg-primary text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-tecseg-primary hover:text-tecseg-dark transform hover:scale-105 transition duration-300 scroll-fade delay-600">Solicictar Atendimento</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide absolute inset-0 opacity-0">
+                    <img src="https://upgradeti.com.br/wp-content/uploads/2023/08/suporte-tecnico-de-TI-6.jpg" alt="Suporte Técnico" class="w-full h-full object-cover opacity-30">
+                    <div class="absolute inset-0 flex flex-col justify-center items-start text-left p-8 md:px-20 lg:px-40 bg-black/40">
+                        <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4 animate-fadeInDown">Tecnologia, Segurança e Suporte.</h2>
+                        <p class="text-base sm:text-xl text-tecseg-light max-w-xl scroll-fade delay-300">Mais do que internet, oferecemos a tranquilidade da segurança eletrônica e um atendimento de verdade.</p>
+                        <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="#seguranca" class="border-2 border-white text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-white hover:text-tecseg-dark transform hover:scale-105 transition duration-300 scroll-fade delay-500">Nossos Serviços</a>
+                            <a href="atendimento.html" class="border-2 border-tecseg-primary text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-tecseg-primary hover:text-tecseg-dark transform hover:scale-105 transition duration-300 scroll-fade delay-600">Solicictar Atendimento</a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="slide absolute inset-0 opacity-0">
+                    <img src="https://informati.com.br/wp-content/uploads/2024/08/Gestao_e_Suporte_Tecnico_de_TI_Como_a_InformaTI_Pode_Transformar_sua_Empresa_Capa.png" alt="Atendimento Local" class="w-full h-full object-cover opacity-30">
+                    <div class="absolute inset-0 flex flex-col justify-center items-start text-left p-8 md:px-20 lg:px-40 bg-black/40">
+                        <h2 class="text-3xl sm:text-5xl md:text-6xl font-extrabold text-white mb-4 animate-fadeInDown">Atendimento de Verdade.</h2>
+                        <p class="text-base sm:text-xl text-tecseg-light max-w-xl scroll-fade delay-300">Aqui, você fala com quem resolve. Suporte humanizado e rápido, sempre que precisar.</p>
+                        <div class="mt-8 flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4">
+                            <a href="suporte.html" class="border-2 border-white text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-white hover:text-tecseg-dark transform hover:scale-105 transition duration-300 scroll-fade delay-500">Suporte Remoto</a>
+                            <a href="atendimento.html" class="border-2 border-tecseg-primary text-white font-bold py-3 px-8 rounded-full shadow-xl hover:bg-tecseg-primary hover:text-tecseg-dark transform hover:scale-105 transition duration-300 scroll-fade delay-600">Solicictar Atendimento</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="carousel-nav" class="absolute bottom-6 md:bottom-10 flex space-x-3 z-20">
+                <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition"></button>
+                <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition"></button>
+                <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition"></button>
+                <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition"></button>
+                <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition"></button>
+                <button class="dot w-3 h-3 bg-white rounded-full opacity-50 hover:opacity-100 transition"></button>
+            </div>
+        </section>
+
+        <!--planos de internet-->
+
+        <section id="planos" class="py-20 bg-tecseg-light scroll-fade">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-extrabold text-tecseg-dark mb-4 scroll-fade">Planos de Internet</h2>
+                <p class="text-lg text-gray-600 mb-16 max-w-3xl mx-auto scroll-fade delay-200">Ultravelocidade e estabilidade da Fibra Óptica para todas as suas necessidades.</p>
+
+                <div class="grid md:grid-cols-4 gap-8 max-w-8xl mx-auto">
+
+                    <div class="bg-white p-6 rounded-3xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition duration-500 border-t-8 border-tecseg-primary/50 scroll-fade delay-300">
+                        <h3 class="text-2xl font-bold mb-2 text-tecseg-primary">Plano Básico</h3>
+                        <p class="text-gray-500 mb-4">Ideal para navegação e redes sociais.</p>
+                        <div class="my-6">
+                            <span class="text-6xl font-extrabold text-tecseg-dark">50</span>
+                            <span class="text-3xl font-bold text-gray-500">Mbps</span>
+                        </div>
+                        <p class="text-3xl font-bold text-tecseg-dark mb-8 price-alert">
+                            R$ <span class="text-5xl text-red-600 font-extrabold">80</span>,<span class="text-3xl font-bold text-red-600">00</span>/mês
+                        </p>
+                        <ul class="text-left space-y-3 mb-8 text-gray-700">
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 14.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Conexão segura</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 14.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Atendimento Remoto</li>
+                        </ul>
+                        <button class="w-full bg-tecseg-dark text-white font-bold py-3 rounded-full hover:bg-gray-800 transition duration-300 transform hover:scale-105">Assinar Agora</button>
+                    </div>
+
+
+                    <div class="bg-yellow-50 p-6 rounded-3xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition duration-500 border-t-8 border-tecseg-primary/70 scroll-fade delay-400">
+                        <h3 class="text-2xl font-bold mb-2 text-tecseg-primary">Plano Médio</h3>
+                        <p class="text-gray-500 mb-4">Ideal para navegação e downloads gráficos.</p>
+                        <div class="my-6">
+                            <span class="text-6xl font-extrabold text-tecseg-dark">100</span>
+                            <span class="text-3xl font-bold text-gray-500">Mbps</span>
+                        </div>
+                        <p class="text-3xl font-bold text-tecseg-dark mb-8 price-alert">
+                            R$ <span class="text-5xl text-red-600 font-extrabold">100</span>,<span class="text-3xl font-bold text-red-600">00</span>/mês
+                        </p>
+                        <ul class="text-left space-y-3 mb-8 text-gray-700">
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 14.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Conexão segura</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 14.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Atendimento Remoto</li>
+                        </ul>
+                        <button class="w-full bg-tecseg-dark text-white font-bold py-3 rounded-full hover:bg-gray-800 transition duration-300 transform hover:scale-105">Assinar Agora</button>
+                    </div>
+
+                    <div class="bg-tecseg-dark p-8 rounded-3xl shadow-2xl ring-4 ring-tecseg-primary transform scale-105 transition duration-500 relative scroll-fade delay-500">
+                        <span class="absolute top-0 right-0 bg-tecseg-primary text-tecseg-dark text-xs font-bold uppercase py-1 px-4 rounded-bl-lg rounded-tr-3xl">Mais Popular</span>
+                        <h3 class="text-3xl font-bold mb-2 text-white">Médio</h3>
+                        <p class="text-gray-400 mb-4">Perfeito para streaming e múltiplos dispositivos.</p>
+                        <div class="my-6">
+                            <span class="text-7xl font-extrabold text-tecseg-primary">200</span>
+                            <span class="text-3xl font-bold text-white">Mbps</span>
+                        </div>
+                        <p class="text-3xl font-bold text-white mb-8 price-alert">
+                            R$ <span class="text-6xl text-tecseg-primary font-extrabold">130</span>,<span class="text-3xl font-bold text-tecseg-primary">00</span>/mês
+                        </p>
+                        <ul class="text-left space-y-3 mb-8 text-tecseg-light">
+                            <li class="flex items-center"><svg class="w-6 h-6 mr-2 text-tecseg-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 14.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>IP Fixo Incluso</li>
+                            <li class="flex items-center"><svg class="w-6 h-6 mr-2 text-tecseg-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 14.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Download e Upload Simétricos</li>
+                            <li class="flex items-center"><svg class="w-6 h-6 mr-2 text-tecseg-primary" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 14.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Suporte Prioritário</li>
+                        </ul>
+                        <button class="w-full bg-tecseg-primary text-tecseg-dark font-bold py-3 rounded-full hover:bg-yellow-600 transition duration-300 transform hover:scale-105 shadow-xl">Contratar Plano</button>
+                    </div>
+
+                 <div class="bg-white p-6 rounded-3xl shadow-xl hover:shadow-2xl transform hover:-translate-y-2 transition duration-500 border-t-8 border-gray-400 scroll-fade delay-600">
+                        <h3 class="text-2xl font-bold mb-2 text-tecseg-dark">ULTRA</h3>
+                        <p class="text-gray-500 mb-4">Para gamers, grandes famílias e escritórios.</p>
+                        <div class="my-6">
+                            <span class="text-6xl font-extrabold text-tecseg-dark">300 Mbps</span>
+                            <span class="text-3xl font-bold text-gray-500">+</span>
+                        </div>
+                        <p class="text-3xl font-bold text-tecseg-dark mb-8 price-alert">
+                            R$ <span class="text-5xl text-red-600 font-extrabold">150</span>,<span class="text-3xl font-bold text-red-600">50</span>/mês
+                        </p>
+                        <ul class="text-left space-y-3 mb-8 text-gray-700">
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 14.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Acesso a Conteúdo Exclusivo</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 14.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Consultoria de Otimização</li>
+                            <li class="flex items-center"><svg class="w-5 h-5 mr-2 text-green-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 14.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>Instalação Expressa</li>
+                        </ul>
+                        <button class="w-full bg-tecseg-dark text-white font-bold py-3 rounded-full hover:bg-gray-800 transition duration-300 transform hover:scale-105">Assinar Agora</button>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!--segurança-->
+
+        <section id="seguranca" class="py-20 bg-white scroll-fade">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-extrabold text-tecseg-dark mb-4 scroll-fade">Serviços de Segurança Eletrônica</h2>
+                <p class="text-xl font-medium text-tecseg-primary mb-16 max-w-3xl mx-auto scroll-fade delay-200">Proteção completa para sua residência e negócio. Instalação profissional, qualidade e garantia.</p>
+
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-8xl mx-auto">
+
+                    <div class="bg-tecseg-light p-8 rounded-3xl shadow-xl border-b-8 border-tecseg-dark hover:border-tecseg-primary transform hover:scale-[1.02] transition duration-300 group scroll-fade delay-300">
+                        <svg class="w-16 h-16 text-tecseg-primary mx-auto mb-6 group-hover:scale-110 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4.55-4.55a1 1 0 011.414 1.414L16.414 11l4.55 4.55a1 1 0 01-1.414 1.414L15 12.414l-4.55 4.55a1 1 0 01-1.414-1.414L13.586 11l-4.55-4.55a1 1 0 011.414-1.414L15 10zM12 4v2m0 12v2m-6-6H4m16 0h-2"></path></svg>
+                        <h3 class="text-xl font-bold mb-2 text-tecseg-dark">Sistema CFTV</h3>
+                        <p class="text-sm text-gray-600">Instalação e manutenção de câmeras de segurança de alta resolução.</p>
+                    </div>
+
+                    <div class="bg-tecseg-light p-8 rounded-3xl shadow-xl border-b-8 border-tecseg-dark hover:border-tecseg-primary transform hover:scale-[1.02] transition duration-300 group scroll-fade delay-400">
+                        <svg class="w-16 h-16 text-tecseg-primary mx-auto mb-6 group-hover:scale-110 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <h3 class="text-xl font-bold mb-2 text-tecseg-dark">Instalação de Alarmes</h3>
+                        <p class="text-sm text-gray-600">Sistemas de alarme residenciais e comerciais com sensores de última geração.</p>
+                    </div>
+
+                    <div class="bg-tecseg-light p-8 rounded-3xl shadow-xl border-b-8 border-tecseg-dark hover:border-tecseg-primary transform hover:scale-[1.02] transition duration-300 group scroll-fade delay-500">
+                        <svg class="w-16 h-16 text-tecseg-primary mx-auto mb-6 group-hover:scale-110 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                        <h3 class="text-xl font-bold mb-2 text-tecseg-dark">Cerca Elétrica</h3>
+                        <p class="text-sm text-gray-600">Instalação de cercas elétricas perimetrais com total segurança e certificação.</p>
+                    </div>
+
+                    <div class="bg-tecseg-light p-8 rounded-3xl shadow-xl border-b-8 border-tecseg-dark hover:border-tecseg-primary transform hover:scale-[1.02] transition duration-300 group scroll-fade delay-600">
+                        <svg class="w-16 h-16 text-tecseg-primary mx-auto mb-6 group-hover:scale-110 transition duration-300" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                        <h3 class="text-xl font-bold mb-2 text-tecseg-dark">Automação de Portões</h3>
+                        <p class="text-sm text-gray-600">Praticidade e segurança com automação para portões deslizantes, basculantes e pivotantes.</p>
+                    </div>
+
+                </div>
+
+                <a href="https://wa.me/5591980824195" target="_blank" class="mt-16 inline-block bg-tecseg-primary text-tecseg-dark font-bold py-4 px-10 rounded-full shadow-2xl hover:bg-yellow-600 transform hover:scale-105 transition duration-300 text-lg scroll-fade delay-700">Solicitar Orçamento de Segurança <span class="ml-2 inline-block transition-transform group-hover:translate-x-1">→</span></a>
+            </div>
+        </section>
+
+        <!--teste de cocnexão-->
+
+        <section id="teste" class="py-20 bg-tecseg-dark text-white scroll-fade">
+            <div class="container mx-auto px-4 text-center">
+                <h2 class="text-4xl font-extrabold mb-4 text-tecseg-primary scroll-fade">Teste AGORA a sua Conexão</h2>
+                <p class="text-lg text-gray-400 mb-12 max-w-2xl mx-auto scroll-fade delay-200">Mede a velocidade de download e upload do seu link atual com o mundo.</p>
+
+                <div class="relative w-80 h-40 mx-auto mb-8">
+                    <div class="absolute inset-x-0 bottom-0 h-40 rounded-t-[100%] bg-gray-700/50 shadow-inner"></div>
+
+                    <div id="speed-dial" class="absolute left-1/2 bottom-0 w-1 h-20 origin-bottom-center z-10" style="transform: rotate(-135deg);">
+                        <div class="w-full h-full bg-red-500 rounded-full shadow-xl"></div>
+                        <div class="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-4 h-4 bg-white rounded-full border-2 border-red-500"></div>
+                    </div>
+
+                    <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20">
+                        <p id="current-speed-text" class="text-5xl font-extrabold text-white">0</p>
+                        <p class="text-lg font-medium text-tecseg-primary">Mbps</p>
+                    </div>
+
+                    <div class="absolute inset-x-0 bottom-0 flex justify-between px-2 text-xs font-bold text-gray-400">
+                        <span>0</span>
+                        <span>250</span>
+                        <span>500</span>
+                    </div>
+                </div>
+
+                <div id="test-results" class="bg-tecseg-dark p-6 rounded-xl border border-gray-700 shadow-xl max-w-md mx-auto hidden">
+                    <p class="text-xl font-bold text-tecseg-primary mb-2">Resultado do Teste</p>
+                    <div class="flex justify-between items-center mb-2">
+                        <span class="text-gray-400 flex items-center"><svg class="w-5 h-5 mr-1 text-green-400" fill="currentColor" viewBox="0 0 20 20"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Download:</span>
+                        <span id="download-result" class="text-white text-2xl font-bold">...</span>
+                    </div>
+                    <div class="flex justify-between items-center">
+                        <span class="text-gray-400 flex items-center"><svg class="w-5 h-5 mr-1 text-blue-400 transform rotate-180" fill="currentColor" viewBox="0 0 20 20"><path d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> Upload:</span>
+                        <span id="upload-result" class="text-white text-2xl font-bold">...</span>
+                    </div>
+                </div>
+
+                <button id="start-test-button" class="mt-8 bg-tecseg-primary text-tecseg-dark font-bold py-4 px-12 rounded-full shadow-2xl hover:bg-yellow-600 transition duration-300 transform hover:scale-105 animate-pulseYellow text-lg">
+                    Iniciar Teste
+                </button>
+
+            </div>
+        </section>
+
+        <!--contatos-->
+
+        <section id="contato" class="py-16 bg-white scroll-fade">
+            <div class="container mx-auto px-4 grid md:grid-cols-2 gap-12">
+
+                <div class="md:col-span-1 text-left">
+                    <h3 class="text-2xl font-bold text-tecseg-dark mb-4 border-b pb-2 border-tecseg-primary">Contato Rápido</h3>
+                    <p class="text-gray-600 mb-4">Estamos prontos para te atender. Fale conosco pelos canais abaixo:</p>
+                    <div class="space-y-3">
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-tecseg-primary" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"></path></svg>
+                            <span class="text-gray-700">suporte@tecseg.com.br</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-tecseg-primary" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M6.62 10.79c1.44 2.83 3.76 5.15 6.59 6.59l2.2-2.2c.27-.27.67-.36 1.02-.24 1.12.37 2.33.57 3.57.57.55 0 1 .45 1 1V20c0 .55-.45 1-1 1-9.39 0-17-7.61-17-17 0-.55.45-1 1-1h3.5c.55 0 1 .45 1 1 0 1.25.2 2.45.57 3.57.12.35.03.75-.24 1.02l-2.2 2.2z"></path></svg>
+                            <span class="text-gray-700">(91) 98082-4195 (WhatsApp/Fixo)</span>
+                        </div>
+                        <div class="flex items-center">
+                            <svg class="w-6 h-6 mr-3 text-tecseg-primary" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 2c-4.97 0-9 4.03-9 9 0 4.17 2.84 7.67 6.64 8.79-.58-.87-.94-1.93-.94-3.79 0-2.31 1.9-4.2 4.2-4.2s4.2 1.9 4.2 4.2c0 1.86-.36 2.92-.94 3.79 3.8 1.12 6.64-2.28 6.64-8.79 0-4.97-4.03-9-9-9zm0 18c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5z"/></svg>
+                            <span class="text-gray-700">Atendimento: Seg a Sex, 8h às 18h</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="md:col-span-1 text-left">
+                    <h3 class="text-2xl font-bold text-tecseg-dark mb-4 border-b pb-2 border-tecseg-primary">Onde Estamos</h3>
+                    <p class="text-gray-600 mb-4">Rua da Tecnologia, 123 - Centro<br>Vigia de Nazaré, PA - Brasil</p>
+                    <div class="w-full h-80 bg-gray-200 rounded-xl shadow-inner flex items-center justify-center overflow-hidden border-2 border-gray-300">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d456.46635022699405!2d-48.14457897155419!3d-0.8560041169963968!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x92a6815db5d8ff6b%3A0x8a8ea7d4979edfa1!2sTECSEG%20TELECOM!5e1!3m2!1spt-BR!2sbr!4v1764182159910!5m2!1spt-BR!2sbr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Footer -->
+    <footer class="bg-tecseg-dark text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">&copy; 2025 TECSEG TECNOLOGIAS. Todos os direitos reservados.</p>
+            <p class="text-xs text-gray-500 mt-2">Desenvolvido por <strong>Back Informática- Soluções T.I</strong> - fone - 91-983252639</p>
+        </div>
+    </footer>
+
+    </main>
+
+    <script>
+        document.getElementById('menu-button').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // JavaScript para o Header fixo e com sombra ao rolar
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // JavaScript para o Efeito de Rolagem (Scroll Fade In)
+        const faders = document.querySelectorAll('.scroll-fade');
+        const appearOptions = { threshold: 0.2 }; // Aparece quando 20% do elemento está visível
+
+        const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
+            entries.forEach(entry => {
+                if (!entry.isIntersecting) {
+                    return;
+                }
+                entry.target.classList.add('show');
+                appearOnScroll.unobserve(entry.target);
+            });
+        }, appearOptions);
+
+        faders.forEach(fader => {
+            appearOnScroll.observe(fader);
+        });
+
+        // JavaScript para o Carousel
+        const slides = document.querySelectorAll('#carousel .slide');
+        const dots = document.querySelectorAll('#carousel-nav .dot');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.remove('opacity-100');
+                slide.classList.add('opacity-0');
+                dots[i].classList.remove('opacity-100');
+                dots[i].classList.add('opacity-50');
+
+                if (i === index) {
+                    slide.classList.remove('opacity-0');
+                    slide.classList.add('opacity-100');
+                    dots[i].classList.remove('opacity-50');
+                    dots[i].classList.add('opacity-100');
+                }
+            });
+            currentSlide = index;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            showSlide(currentSlide);
+        }
+
+        // Adiciona funcionalidade aos pontos de navegação
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => showSlide(index));
+        });
+
+        // Inicializa o primeiro slide e o auto-play (a cada 5 segundos)
+        showSlide(currentSlide);
+        setInterval(nextSlide, 5000);
+
+        // JavaScript para o Teste de Conexão Simulado
+        const startButton = document.getElementById('start-test-button');
+        const speedDial = document.getElementById('speed-dial');
+        const currentSpeedText = document.getElementById('current-speed-text');
+        const testResults = document.getElementById('test-results');
+        const downloadResult = document.getElementById('download-result');
+        const uploadResult = document.getElementById('upload-result');
+
+        startButton.addEventListener('click', function() {
+            // Esconde resultados anteriores e reinicia o ponteiro
+            testResults.classList.add('hidden');
+            startButton.disabled = true;
+            startButton.textContent = 'Testando... Aguarde!';
+            speedDial.style.transform = 'rotate(-135deg)';
+            currentSpeedText.textContent = '0';
+
+            // Simulação do Teste de Download (Atinge o pico de 200 Mbps)
+            let currentDownload = 0;
+            const targetDownload = 200; // Simulação: atinge o plano popular
+            const downloadInterval = setInterval(() => {
+                if (currentDownload < targetDownload) {
+                    currentDownload += Math.floor(Math.random() * 20) + 10; // Incremento aleatório
+                    if (currentDownload > targetDownload) currentDownload = targetDownload;
+
+                    // Cálculo da rotação: 270 graus totais (de -135 a +135). 500 Mbps max.
+                    const maxSpeed = 500;
+                    const rotation = -135 + (currentDownload / maxSpeed) * 270;
+                    speedDial.style.transform = `rotate(${rotation}deg)`;
+                    currentSpeedText.textContent = currentDownload;
+                } else {
+                    clearInterval(downloadInterval);
+
+                    // Simulação do Teste de Upload (Metade do Download)
+                    let currentUpload = 0;
+                    const targetUpload = Math.floor(targetDownload / 2);
+                    const uploadInterval = setInterval(() => {
+                        if (currentUpload < targetUpload) {
+                            currentUpload += Math.floor(Math.random() * 5) + 5;
+                            if (currentUpload > targetUpload) currentUpload = targetUpload;
+                        } else {
+                            clearInterval(uploadInterval);
+
+                            // Exibe os resultados finais
+                            downloadResult.textContent = `${targetDownload} Mbps`;
+                            uploadResult.textContent = `${targetUpload} Mbps`;
+                            testResults.classList.remove('hidden');
+                            startButton.textContent = 'Iniciar Novo Teste';
+                            startButton.disabled = false;
+                        }
+                    }, 150); // Velocidade do upload
+
+                }
+            }, 100); // Velocidade do download
+        });
+    </script>
+
+</body>
+</html>

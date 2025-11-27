@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solicitação de atendimento - tecseg</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/feather-icons/dist/feather.min.js"></script>
+
+    <style>
+        .hero-gradient {
+            background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
+        }
+        .report-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .emergency-btn {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(220, 38, 38, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+            }
+        }
+    </style>
+</head>
+<body class="font-sans bg-gray-50">
+
+<nav class="bg-white shadow-lg sticky top-0 z-50" role="navigation">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between h-20 items-center">
+            <a href="index.html" class="flex-shrink-0 flex items-center" aria-label="Voltar para a página inicial">
+                <img src="https://i.imgur.com/4aPFJyI.jpeg" alt="TECSEG" class="h-10 w-15 rounded-lg">
+            </a>
+            <a href="https://api.whatsapp.com/send?phone=5591980824195&text=Solu%C3%A7%C3%B5es+TI&fbclid=PAZXh0bgNhZW0CMTEAAac46VnZCA7fhc8oJkShVZgWhNdcwtb10UA5qGrc1jt0DxZjnOAsb5iJhUlVIQ_aem_3xxPypeVE9cvwMP-rFfj1Q"
+               class="bg-yellow-600 text-white font-semibold py-2 px-6 rounded-full shadow-md hover:bg-yellow-700 transition"
+               target="_blank" rel="noopener noreferrer">
+               Falar com o Técnico
+            </a>
+        </div>
+    </div>
+</nav>
+
+<header class="bg-[url('https://img.freepik.com/free-vector/abstract-red-circle-black-background-technology_1142-9839.jpg?semt=ais_hybrid&w=740&q=80')] pt-16 pb-16 overflow-hidden" aria-labelledby="termo-heading">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+        <h1 id="termo-heading"
+            class="text-4xl font-extrabold text-white sm:text-5xl"
+            data-aos="fade-up">
+            Solicitação de <span class="text-red-400">atendimento</span> Técnico.
+        </h1>
+    </div>
+</header>
+
+    <section id="report" class="py-16 bg-white">
+        <div class="container mx-auto px-4">
+            <div class="max-w-3xl mx-auto bg-blue-50 rounded-xl shadow-md overflow-hidden p-6">
+                <div class="mb-6">
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">Como Solicitar um atendimento ou abrir um chamado?</h3>
+                    <p class="text-gray-600 mb-4">Você pode solicitar um atendimento ou retorno técnico da TECSEG preenchendo o formulário abaixo. Todos os chamados são analisados com prioridade, e nossa equipe inicia a apuração em menos de uma hora, no período das 9h às 18h. Estamos aqui para garantir que você tenha suporte rápido, eficiente, transparente e com responsabilidade. </p>
+                    <div class="bg-yellow-50 border-l-4 border-yellow-400 p-4 mb-4">
+                        <p class="text-yellow-700"><strong>Importante:</strong> Em casos de emergência ou risco, ligue imediatamente para o técnico<strong> pelo fone 91-99257-0548 ou 91-98082-4195 (zap).</strong></p>
+                    </div>
+                </div>
+
+
+                <form id="reportForm" class="space-y-6">
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="clientName" class="block text-sm font-medium text-gray-700 mb-1">Seu nome ou apelido</label>
+                            <input type="text" id="clientName" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Digite seu nome ou apelido">
+                        </div>
+                        <div>
+                            <label for="reporterContact" class="block text-sm font-medium text-gray-700 mb-1">Contato</label>
+                            <input type="text" id="reporterContact" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Telefone ou e-mail para contato">
+                        </div>
+                    </div>
+                    <div>
+                        <label for="end" class="block text-sm font-medium text-gray-700 mb-1">Endereço*</label>
+                        <input type="text" id="end" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Endereço ou local do atendimento" required>
+                    </div>
+
+                    <div>
+                        <label for="reportType" class="block text-sm font-medium text-gray-700 mb-1">Tipo de Serviço</label>
+                        <select id="reportType" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" required>
+                            <option value="" disabled selected>Selecione o tipo de Serviço</option>
+                            <option value="Field Service">Atendimento em Campo</option>
+                            <option value="Suporte Remoto">Assistência Remota</option>
+                            <option value="Duvidas">Orçamento</option>
+                            <option value="outro">Outros</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label for="incidentDetails" class="block text-sm font-medium text-gray-700 mb-1">Motivo do atendimento</label>
+                        <textarea id="incidentDetails" rows="4" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Motivo do atendimento" required></textarea>
+                    </div>
+                    <div>
+                        <label for="Info" class="block text-sm font-medium text-gray-700 mb-1">Equipamentos envolvidos</label>
+                        <textarea id="Info" rows="3" class="w-full px-4 py-2 border border-gray-300 rounded-md focus:ring-blue-500 focus:border-blue-500" placeholder="Equipamentos ou técnologia envolvidos" required></textarea>
+                    </div>
+
+                    <div class="pt-4 border-t border-gray-200">
+                        <div class="flex items-start">
+                            <input id="acceptTerms" name="acceptTerms" type="checkbox" required
+                                   class="h-4 w-4 text-blue-600 border-gray-300 rounded mt-1">
+                            <label for="acceptTerms" class="ml-2 block text-sm text-gray-700 leading-snug">
+                                Eu li e aceito o
+                                <a href="termo.html" target="_blank" class="text-indigo-600 font-semibold hover:text-indigo-800 underline">
+                                    Termo de Responsabilidade e Confidencialidade
+                                </a>
+                                da TecSeg. (Aceite obrigatório para todos os serviços).
+                            </label>
+                        </div>
+                    </div>
+                    <div class="pt-4">
+                        <button type="submit" class="w-full bg-blue-600 text-white py-3 px-6 rounded-md font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-300">
+                            <i class="fas fa-paper-plane mr-2"></i> Enviar Solicitação de Atendimento
+                        </button>
+                    </div>
+                </form>
+            </div>
+            </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-tecseg-dark text-white py-8">
+        <div class="container mx-auto px-4 text-center">
+            <p class="text-sm">&copy; 2025 TECSEG TECNOLOGIAS. Todos os direitos reservados.</p>
+            <p class="text-xs text-gray-500 mt-2">Desenvolvido por <strong>Back Informática- Soluções T.I</strong> - fone - 91-983252639</p>
+        </div>
+    </footer>
+
+
+ <script>
+ // Certifique-se de que a função feather.replace() seja chamada se você usar ícones Feather em outras partes do corpo
+ // feather.replace();
+
+ document.querySelector("#reportForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+
+  const dados = {
+    nome: document.querySelector("#clientName").value.trim(),
+    contato: document.querySelector("#reporterContact").value.trim(),
+    local: document.querySelector("#end").value.trim(),
+    tipo: document.querySelector("#reportType").value.trim(),
+    incidente: document.querySelector("#incidentDetails").value.trim(),
+    chamado: document.querySelector("#Info").value.trim(),
+    // CORRIGIDO: .checked é uma propriedade booleana, não uma função.
+    termo: document.querySelector("#acceptTerms").checked,
+
+  };
+
+  fetch("/api/denuncias", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(dados)
+  })
+  .then(res => res.json())
+  .then(data => {
+    if (data.status === "sucesso") {
+      alert("Solicitação enviada com sucesso!");
+      document.querySelector("#reportForm").reset();
+    } else {
+      alert("Erro: " + data.mensagem);
+    }
+  })
+  .catch(err => {
+    console.error("Erro:", err);
+    alert("Erro de conexão ao enviar Solicitação.");
+  });
+});
+  </script>
+</body>
+
+</html>
